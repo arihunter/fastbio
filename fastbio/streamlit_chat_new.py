@@ -2,7 +2,7 @@ import streamlit as st
 import os
 import asyncio
 import time
-from biorxiv_manager import BioRxivManager  
+from biorxiv_manager import PubmedManager  
 from llama_index import (
     load_index_from_storage, 
     ServiceContext, 
