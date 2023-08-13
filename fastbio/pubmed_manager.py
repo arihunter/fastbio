@@ -13,7 +13,7 @@ class PubmedManager(BaseReader):
 
     def __init__(self):
         os.environ["NCBI_API_KEY"] = "71836676d726923c4d2847443faae0fef308"
-        self.cachePath = "/Users/arihantbarjatya/Documents/fastbio/database_storage/stored_embeddings/pubmed"
+        self.cachePath = "database_storage/stored_embeddings/pubmed"
     
     def search(self,query):
         Entrez.email = 'arihantbadjatya@gmail.com'
