@@ -72,7 +72,7 @@ class SearchBackend1():
   # add userId logic so once a users DB is created its remembered
   @st.cache_data(show_spinner=False)
   def main(_self,query):
-    with st.spinner("Creating the best response for you"):
+    with st.spinner("Searching PubMed"):
         currentDocs,pubmedPapers = _self.fetch_docs(query)
         
         _self.index = VectorStoreIndex.from_documents(currentDocs)
@@ -142,34 +142,25 @@ def generatedQuestionCallback(newQuery):
 def createNewQuestions(query,response):
     responseDoc = Document(text=response,extra_info={"Original Query":query})
     dataGenerator = DatasetGenerator.from_documents([responseDoc])
-    newQuestions = dataGenerator.generate_questions_from_nodes()
+    numberOfQuestions = 3 
+    newQuestions = dataGenerator.generate_questions_from_nodes(numberofQuestions)
     #print(newQuestions)
-    numberOfQuestions = 3        
+           
     
-    try:
-        newQuestions = newQuestions[:numberOfQuestions]
-    except Exception as e:
-        pass
+    # try:
+    #     newQuestions = newQuestions[:numberOfQuestions]
+    # except Exception as e:
+    #     pass
     
-    newQuestions = sorted(newQuestions,key=len)     
-    n = len(newQuestions)
+    # newQuestions = sorted(newQuestions,key=len)    
+    # return newQuestions
+    
+    # n = len(newQuestions)
 
-    col1,col2,col3 = st.columns([0.3,0.3,0.4])
+    return newQuestions
 
-    try:
-        col1.button(newQuestions[0],on_click=generatedQuestionCallback,args=[newQuestions[0]])
-    except Exception as e:
-        pass
 
-    try:
-        col2.button(newQuestions[1],on_click=generatedQuestionCallback,args=[newQuestions[1]])
-    except Exception as e:
-        pass
 
-    try:
-        col3.button(newQuestions[2],on_click=generatedQuestionCallback,args=[newQuestions[2]])
-    except Exception as e:
-        pass
     
 
 searchObj1 = SearchBackend1()
@@ -201,6 +192,14 @@ unsafe_allow_html=True)
             st.write(f'<i>Sorry! Try a different question</i>',unsafe_allow_html=True)
         st.markdown("")
         st.markdown("")
+
+        if st.session_state.response != "None":
+            newQuestions = createNewQuestions(st.session_state.query,st.session_state.response) 
+            col1,col2,col3 = st.columns([0.3,0.3,0.4])
+            col1.button(newQuestions[0],on_click=generatedQuestionCallback,args=[newQuestions[0]])
+            col2.button(newQuestions[1],on_click=generatedQuestionCallback,args=[newQuestions[1]])
+            col3.button(newQuestions[2],on_click=generatedQuestionCallback,args=[newQuestions[2]])
+
         otherPapercheck = []
         with st.expander("Citations"):
             for i,reference in enumerate(citations):
@@ -216,12 +215,6 @@ unsafe_allow_html=True)
                     st.button(":thumbsdown:",key=f"citationsNegative{i}")    
 
         # st.markdown("")
-        
-        if st.session_state.response != "None":
-            with st.expander("Deep Dive"):
-                createNewQuestions(st.session_state.query,st.session_state.response) 
-
-
         st.divider()
         st.subheader("Feedback")
 
