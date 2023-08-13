@@ -143,7 +143,7 @@ def createNewQuestions(query,response):
     responseDoc = Document(text=response,extra_info={"Original Query":query})
     dataGenerator = DatasetGenerator.from_documents([responseDoc])
     numberOfQuestions = 3 
-    newQuestions = dataGenerator.generate_questions_from_nodes(numberofQuestions)
+    newQuestions = dataGenerator.generate_questions_from_nodes(numberOfQuestions)
     #print(newQuestions)
            
     
