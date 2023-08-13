@@ -210,11 +210,6 @@ unsafe_allow_html=True)
                 with citationsCol1:
                     st.write(f'<a href = {reference[2]}>{reference[1]}</a>',unsafe_allow_html=True)
                     showText = st.checkbox("Show Text",key=f"{i}")
-<<<<<<< HEAD
-=======
-                    if showText:
-                        st.caption(f'<i>{reference[0]}</i>',unsafe_allow_html=True)
->>>>>>> 7d65f593e0801916c4aa41f58a6e9073d94722c4
                     st.caption(f'Confidence Score: {round(reference[3],2)}')
                     if showText:
                         st.caption(f'<i>{reference[0]}</i>',unsafe_allow_html=True)
