@@ -12,7 +12,7 @@ import os
 class PubmedManager(BaseReader):
 
     def __init__(self):
-        os.environ["NCBI_API_KEY"] = "71836676d726923c4d2847443faae0fef308"
+        #os.environ["NCBI_API_KEY"] = "71836676d726923c4d2847443faae0fef308"
         self.cachePath = "database_storage/stored_embeddings/pubmed"
     
     def search(self,query):
