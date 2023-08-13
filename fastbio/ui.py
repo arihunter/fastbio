@@ -204,7 +204,7 @@ unsafe_allow_html=True)
         with st.expander("Citations"):
             for i,reference in enumerate(citations):
                 citationsCol1,citationsCol2 = st.columns([0.9,0.1])
-                otherPaperCheck.append(reference[2)
+                otherPaperCheck.append(reference[2])
                 with citationsCol1:
                     st.write(f'<a href = {reference[2]}>{reference[1]}</a>',unsafe_allow_html=True)
                     st.caption(f'<i>{reference[0]}</i>',unsafe_allow_html=True)
