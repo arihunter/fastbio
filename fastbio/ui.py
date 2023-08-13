@@ -33,12 +33,14 @@ col2.title("FastBio")
 
 
 #sidebar
-apiKey = st.sidebar.text_input("OpenAI API Key", type="password")
-st.session_state.apikey = apiKey
-if not apiKey:
-    st.info("Please add your OpenAI API key to continue.")
-    st.stop()
-openai.api_key = apiKey
+# apiKey = st.sidebar.text_input("OpenAI API Key", type="password")
+# st.session_state.apikey = apiKey
+# if not apiKey:
+#     st.info("Please add your OpenAI API key to continue.")
+#     st.stop()
+openai.api_key = st.secrets["OPENAI_API_KEY"]
+
+
 
 
 #main content
@@ -72,7 +74,7 @@ class SearchBackend1():
   # add userId logic so once a users DB is created its remembered
   @st.cache_data(show_spinner=False)
   def main(_self,query):
-    with st.spinner("Creating the best response for you"):
+    with st.spinner("Searching PubMed"):
         currentDocs,pubmedPapers = _self.fetch_docs(query)
         
         _self.index = VectorStoreIndex.from_documents(currentDocs)
@@ -142,34 +144,25 @@ def generatedQuestionCallback(newQuery):
 def createNewQuestions(query,response):
     responseDoc = Document(text=response,extra_info={"Original Query":query})
     dataGenerator = DatasetGenerator.from_documents([responseDoc])
-    newQuestions = dataGenerator.generate_questions_from_nodes()
+    numberOfQuestions = 3 
+    newQuestions = dataGenerator.generate_questions_from_nodes(numberOfQuestions)
     #print(newQuestions)
-    numberOfQuestions = 3        
+           
     
-    try:
-        newQuestions = newQuestions[:numberOfQuestions]
-    except Exception as e:
-        pass
+    # try:
+    #     newQuestions = newQuestions[:numberOfQuestions]
+    # except Exception as e:
+    #     pass
     
-    newQuestions = sorted(newQuestions,key=len)     
-    n = len(newQuestions)
+    # newQuestions = sorted(newQuestions,key=len)    
+    # return newQuestions
+    
+    # n = len(newQuestions)
 
-    col1,col2,col3 = st.columns([0.3,0.3,0.4])
+    return newQuestions
 
-    try:
-        col1.button(newQuestions[0],on_click=generatedQuestionCallback,args=[newQuestions[0]])
-    except Exception as e:
-        pass
 
-    try:
-        col2.button(newQuestions[1],on_click=generatedQuestionCallback,args=[newQuestions[1]])
-    except Exception as e:
-        pass
 
-    try:
-        col3.button(newQuestions[2],on_click=generatedQuestionCallback,args=[newQuestions[2]])
-    except Exception as e:
-        pass
     
 
 searchObj1 = SearchBackend1()
@@ -201,27 +194,31 @@ unsafe_allow_html=True)
             st.write(f'<i>Sorry! Try a different question</i>',unsafe_allow_html=True)
         st.markdown("")
         st.markdown("")
-        otherPapercheck = []
+
+        if st.session_state.response != "None":
+            newQuestions = createNewQuestions(st.session_state.query,st.session_state.response) 
+            col1,col2,col3 = st.columns([0.3,0.3,0.4])
+            col1.button(newQuestions[0],on_click=generatedQuestionCallback,args=[newQuestions[0]])
+            col2.button(newQuestions[1],on_click=generatedQuestionCallback,args=[newQuestions[1]])
+            col3.button(newQuestions[2],on_click=generatedQuestionCallback,args=[newQuestions[2]])
+
+        otherPaperCheck = []
         with st.expander("Citations"):
             for i,reference in enumerate(citations):
                 citationsCol1,citationsCol2 = st.columns([0.9,0.1])
+                otherPaperCheck.append(reference[2])
                 with citationsCol1:
                     st.write(f'<a href = {reference[2]}>{reference[1]}</a>',unsafe_allow_html=True)
-                    st.caption(f'<i>{reference[0]}</i>',unsafe_allow_html=True)
+                    showText = st.checkbox("Show Text",key=f"{i}")
                     st.caption(f'Confidence Score: {round(reference[3],2)}')
+                    if showText:
+                        st.caption(f'<i>{reference[0]}</i>',unsafe_allow_html=True)
                     st.markdown("")
-                    otherPapercheck.append(str(reference[1]))
                 with citationsCol2:
                     st.button(":thumbsup:",key=f"citationsPositive{i}")
                     st.button(":thumbsdown:",key=f"citationsNegative{i}")    
 
         # st.markdown("")
-        
-        if st.session_state.response != "None":
-            with st.expander("Deep Dive"):
-                createNewQuestions(st.session_state.query,st.session_state.response) 
-
-
         st.divider()
         st.subheader("Feedback")
 
@@ -242,10 +239,12 @@ unsafe_allow_html=True)
                 url = data["url"]
                 url = str(url)
                 relevantCol1,relevantCol2 = st.columns([0.9,0.1])
-                if url not in otherPapercheck:
+                if url not in otherPaperCheck:
                     with relevantCol1:
                         st.write(f'<a href = {url}>{data["title"]}</a>',unsafe_allow_html=True)
-                        st.caption(f'<i>{data["abstract"]}</i>',unsafe_allow_html=True)
+                        showText = st.checkbox("Show Text",key=f"{i}")
+                        if showText:
+                            st.caption(f'<i>{data["abstract"]}</i>',unsafe_allow_html=True)
                         # st.caption(data["title"])
                         # st.caption(url)
                     with relevantCol2:
@@ -357,7 +356,7 @@ unsafe_allow_html=True)
 #     return response,citations,ogPapers
 
 # def searchButtonCallback():
-# 	st.session_state.search = True
+#   st.session_state.search = True
 
 
 # if st.session_state["search"] == False:
@@ -521,7 +520,6 @@ unsafe_allow_html=True)
 
 
     
-
 
 
 
