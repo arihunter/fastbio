@@ -210,7 +210,7 @@ unsafe_allow_html=True)
                 with citationsCol1:
                     st.write(f'<a href = {reference[2]}>{reference[1]}</a>',unsafe_allow_html=True)
                     st.caption(f'Confidence Score: {round(reference[3],2)}')
-                    showText = st.checkbox("Show Text",key=f"{i}")
+                    showText = st.checkbox("Show Text",key=f"citations{i}")
                     if showText:
                         st.caption(f'<i>{reference[0]}</i>',unsafe_allow_html=True)
                     st.markdown("")
@@ -242,7 +242,7 @@ unsafe_allow_html=True)
                 if url not in otherPaperCheck:
                     with relevantCol1:
                         st.write(f'<a href = {url}>{data["title"]}</a>',unsafe_allow_html=True)
-                        showText = st.checkbox("Show Text",key=f"{i}")
+                        showText = st.checkbox("Show Text",key=f"moreInfo{i}")
                         if showText:
                             st.caption(f'<i>{data["abstract"]}</i>',unsafe_allow_html=True)
                         # st.caption(data["title"])
