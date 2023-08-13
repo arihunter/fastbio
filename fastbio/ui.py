@@ -33,12 +33,14 @@ col2.title("FastBio")
 
 
 #sidebar
-apiKey = st.sidebar.text_input("OpenAI API Key", type="password")
-st.session_state.apikey = apiKey
-if not apiKey:
-    st.info("Please add your OpenAI API key to continue.")
-    st.stop()
-openai.api_key = apiKey
+# apiKey = st.sidebar.text_input("OpenAI API Key", type="password")
+# st.session_state.apikey = apiKey
+# if not apiKey:
+#     st.info("Please add your OpenAI API key to continue.")
+#     st.stop()
+openai.api_key = st.secrets["OPENAI_API_KEY"]
+
+
 
 
 #main content
