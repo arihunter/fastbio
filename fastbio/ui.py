@@ -210,7 +210,6 @@ unsafe_allow_html=True)
                     st.caption(f'<i>{reference[0]}</i>',unsafe_allow_html=True)
                     st.caption(f'Confidence Score: {round(reference[3],2)}')
                     st.markdown("")
-                    otherPapercheck.append(str(reference[1]))
                 with citationsCol2:
                     st.button(":thumbsup:",key=f"citationsPositive{i}")
                     st.button(":thumbsdown:",key=f"citationsNegative{i}")    
