@@ -209,8 +209,8 @@ unsafe_allow_html=True)
                 otherPaperCheck.append(reference[2])
                 with citationsCol1:
                     st.write(f'<a href = {reference[2]}>{reference[1]}</a>',unsafe_allow_html=True)
-                    showText = st.checkbox("Show Text",key=f"{i}")
                     st.caption(f'Confidence Score: {round(reference[3],2)}')
+                    showText = st.checkbox("Show Text",key=f"{i}")
                     if showText:
                         st.caption(f'<i>{reference[0]}</i>',unsafe_allow_html=True)
                     st.markdown("")
