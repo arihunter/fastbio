@@ -214,7 +214,7 @@ with tab1:
 
         otherPaperCheck = []
         with st.expander("Citations"):
-            for i,reference in enumerate(citations):
+            for i,reference in enumerate(st.session_state.references):
                 citationsCol1,citationsCol2 = st.columns([0.9,0.1])
                 otherPaperCheck.append(reference[2])
                 with citationsCol1:
@@ -256,7 +256,7 @@ with tab1:
 
 with tab2:
     with st.expander("Other relevant papers"):
-        for i,data in enumerate(pubmedPapers):
+        for i,data in enumerate(st.session_state.pubmedPapers):
             url = data["url"]
             url = str(url)
             relevantCol1,relevantCol2 = st.columns([0.9,0.1])
