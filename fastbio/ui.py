@@ -117,7 +117,7 @@ class SearchBackend1():
     
     return response,citations,pubmedPapers
 
-def searchButtonCallback(userInput):
+def searchButtonCallback():
     st.session_state.search = True
     #st.session_state.toggle1 = not st.session_state.toggle2 
     # print(userInput)
