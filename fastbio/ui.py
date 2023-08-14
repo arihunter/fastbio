@@ -172,6 +172,7 @@ def createNewQuestions(query,response):
     dataGenerator = DatasetGenerator.from_documents([responseDoc])
     numberOfQuestions = 3 
     newQuestions = dataGenerator.generate_questions_from_nodes(numberOfQuestions)
+    newQuestions = sorted(newQuestions,key=len)
     #print(newQuestions)
            
     
