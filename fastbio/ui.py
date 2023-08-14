@@ -246,7 +246,7 @@ unsafe_allow_html=True)
 
         # st.markdown("")
         st.divider()
-        st.subheader("Feedback")
+        #st.subheader("Feedback")
         feedbackCol1, feedbackCol2, feedbackCol3 = st.columns([1,1,1])
         with feedbackCol2:
             collectorMain.st_feedback(
@@ -257,6 +257,7 @@ unsafe_allow_html=True)
                 user_id=st.session_state.userId,
                 open_feedback_label="Please help us understand your response better"
             )
+            searchAgain = st.button("Search Again!", on_click=reboot,type="primary")
 
         # responseFeedback = st.radio('Choose for the generated response',options=('Correct Response, No Hallucinations','Hallucinations','Didnt Like the Response','No Response'))
         # st.session_state["feedbackRating"] = responseFeedback
@@ -264,9 +265,9 @@ unsafe_allow_html=True)
         #     feedbackText = st.text_area("Please help us understand your feedback better")
         #     st.session_state["feedbackText"] = feedbackText
         # st.markdown("")
-        st.markdown("") 
-        finalCol1, finalCol2, finalCol3 = st.columns([1,1,1])
-        finalCol2.button("Search Again!", on_click=reboot,type="primary")
+        # st.markdown("") 
+        # finalCol1, finalCol2, finalCol3 = st.columns([1,1,1])
+        # finalCol2.button("Search Again!", on_click=reboot,type="primary")
 
     
     with tab2:
