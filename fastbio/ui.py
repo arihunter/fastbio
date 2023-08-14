@@ -6,7 +6,9 @@ from llama_index.readers.schema.base import Document
 import os 
 import openai
 import uuid
+from trubrics.integrations.streamlit import FeedbackCollector
 
+userId = str(uuid.uuid4())
 
 #initialisation
 if "search" not in st.session_state:
@@ -23,6 +25,25 @@ if "apikey" not in st.session_state:
     st.session_state["apikey"] = None
 if "references" not in st.session_state:
     st.session_state["references"] = []
+if "userID" not in st.session_state:
+    st.session_state["userId"] = userId
+
+# config = trubrics.init(
+#     email=st.secrets["TRUBRICS_EMAIL"],  # read your Trubrics secrets from environment variables
+#     password=st.secrets["TRUBRICS_PASSWORD"]
+# )
+
+collectorMain = FeedbackCollector(
+    component_name="default",
+    email=st.secrets["TRUBRICS_EMAIL"], # Store your Trubrics credentials in st.secrets:
+    password=st.secrets["TRUBRICS_PASSWORD"], # https://blog.streamlit.io/secrets-in-sharing-apps/
+)
+
+collectorCitations = FeedbackCollector(
+    component_name="citations-feedback",
+    email=st.secrets["TRUBRICS_EMAIL"], # Store your Trubrics credentials in st.secrets:
+    password=st.secrets["TRUBRICS_PASSWORD"], # https://blog.streamlit.io/secrets-in-sharing-apps/
+)
 
 
 #streamlit code
@@ -80,7 +101,6 @@ class SearchBackend1():
         _self.index = VectorStoreIndex.from_documents(currentDocs)
         _self.queryEngine = _self.index.as_query_engine()
         response = _self.queryEngine.query(query)
-        
         citations = []
         for node in response.source_nodes:
             # print(node)
@@ -112,6 +132,8 @@ if st.session_state["search"] == False:
 def log():
     pass
 
+
+
 def editcallback():
     st.session_state["search"] = False
     st.session_state["response"] = None
@@ -137,6 +159,7 @@ def generatedQuestionCallback(newQuery):
     st.session_state["feedbackText"] = None
     st.session_state["references"] = []
     st.session_state["search"] = True
+
 
 
 
@@ -215,12 +238,29 @@ unsafe_allow_html=True)
                         st.caption(f'<i>{reference[0]}</i>',unsafe_allow_html=True)
                     st.markdown("")
                 with citationsCol2:
-                    st.button(":thumbsup:",key=f"citationsPositive{i}")
-                    st.button(":thumbsdown:",key=f"citationsNegative{i}")    
+                    collectorCitations.st_feedback(
+                        feedback_type="thumbs",
+                        model="model-001",
+                        metadata={"query":st.session_state.query,"response":st.session_state.response,"url":reference[2]},
+                        success_fail_message=False,
+                        key=f"Citations-Feedback:{i}",
+                        user_id=st.session_state.userId
+                    )
+                    # citationPositive = st.button(":thumbsup:",key=f"citationsPositive{i}")
+                    # citationPositive = st.button(":thumbsdown:",key=f"citationsNegative{i}")    
 
         # st.markdown("")
         st.divider()
         st.subheader("Feedback")
+
+        collectorMain.st_feedback(
+            feedback_type="faces",
+            model="model-001",
+            metadata={"query":st.session_state.query,"response":st.session_state.response},
+            success_fail_message=False,
+            user_id=st.session_state.userId,
+            open_feedback_label="Please help us understand your response better"
+        )
 
         responseFeedback = st.radio('Choose for the generated response',options=('Correct Response, No Hallucinations','Hallucinations','Didnt Like the Response','No Response'))
         st.session_state["feedbackRating"] = responseFeedback
@@ -248,8 +288,16 @@ unsafe_allow_html=True)
                         # st.caption(data["title"])
                         # st.caption(url)
                     with relevantCol2:
-                        st.button(":thumbsup:",key=f"positive{i}")
-                        st.button(":thumbsdown:",key=f"negative{i}")
+                        collectorCitations.st_feedback(
+                            feedback_type="thumbs",
+                            model="model-001",
+                            metadata={"query":st.session_state.query,"response":st.session_state.response,"url":url},
+                            success_fail_message=False,
+                            key=f"Pubmed-Feedback:{i}",
+                            user_id=st.session_state.userId
+                        )
+                        #st.button(":thumbsup:",key=f"positive{i}")
+                        #st.button(":thumbsdown:",key=f"negative{i}")
                         
 
 
