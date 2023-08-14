@@ -217,11 +217,6 @@ with tab1:
             for i,reference in enumerate(st.session_state.references):
                 otherPaperCheck.append(reference[2])
                 st.write(f'<a href = {reference[2]}>{reference[1]}</a>',unsafe_allow_html=True)
-                st.caption(f'Confidence Score: {round(reference[3],2)}')
-                showText = st.checkbox("Show Text",key=f"citations{i}")
-                if showText:
-                    st.caption(f'<i>{reference[0]}</i>',unsafe_allow_html=True)
-                st.markdown("")
                 collectorCitations.st_feedback(
                     feedback_type="thumbs",
                     model="model-001",
@@ -230,6 +225,11 @@ with tab1:
                     key=f"Citations-Feedback:{i}",
                     user_id=st.session_state.userId
                 )
+                st.caption(f'Confidence Score: {round(reference[3],2)}')
+                showText = st.checkbox("Show Text",key=f"citations{i}")
+                if showText:
+                    st.caption(f'<i>{reference[0]}</i>',unsafe_allow_html=True)
+                st.markdown("")
                 # with citationsCol1:
                     
                 # with citationsCol2:
@@ -263,12 +263,6 @@ with tab2:
             if url not in otherPaperCheck:
                 # with relevantCol1:
                 st.write(f'<a href = {url}>{data["title"]}</a>',unsafe_allow_html=True)
-                showText = st.checkbox("Show Text",key=f"moreInfo{i}")
-                if showText:
-                    st.caption(f'<i>{data["abstract"]}</i>',unsafe_allow_html=True)
-                    # st.caption(data["title"])
-                    # st.caption(url)
-                #with relevantCol2:
                 collectorCitations.st_feedback(
                     feedback_type="thumbs",
                     model="model-001",
@@ -277,6 +271,13 @@ with tab2:
                     key=f"Pubmed-Feedback:{i}",
                     user_id=st.session_state.userId
                 )
+                showText = st.checkbox("Show Text",key=f"moreInfo{i}")
+                if showText:
+                    st.caption(f'<i>{data["abstract"]}</i>',unsafe_allow_html=True)
+                    # st.caption(data["title"])
+                    # st.caption(url)
+                #with relevantCol2:
+                
 
 
 
