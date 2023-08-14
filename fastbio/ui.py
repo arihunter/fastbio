@@ -17,12 +17,12 @@ if "query" not in st.session_state:
     st.session_state["query"] = None
 if "response" not in st.session_state:
     st.session_state["response"] = None
-# if "feedbackRating" not in st.session_state:
-#     st.session_state["feedbackRating"] = None
-# if "feedbackText" not in st.session_state:
-#     st.session_state["feedbackText"] = None
-# if "apikey" not in st.session_state:
-#     st.session_state["apikey"] = None
+if "feedbackRating" not in st.session_state:
+    st.session_state["feedbackRating"] = None
+if "feedbackText" not in st.session_state:
+    st.session_state["feedbackText"] = None
+if "apikey" not in st.session_state:
+    st.session_state["apikey"] = None
 if "references" not in st.session_state:
     st.session_state["references"] = []
 # if "userID" not in st.session_state:
@@ -138,22 +138,22 @@ def searchButtonCallback():
     # st.session_state.pubmedPapers = pubmedPapers
 
 
-# def editcallback():
-#     st.session_state["search"] = False
-#     st.session_state["response"] = None
-#     st.session_state["feedbackRating"] = None
-#     st.session_state["feedbackText"] = None
-#     #st.session_state["engine"] = None
-#     st.session_state["references"] = []
+def editcallback():
+    st.session_state["search"] = False
+    st.session_state["response"] = None
+    st.session_state["feedbackRating"] = None
+    st.session_state["feedbackText"] = None
+    #st.session_state["engine"] = None
+    st.session_state["references"] = []
 
-# def reboot():
-#     st.session_state["search"] = False
-#     st.session_state["query"] = None
-#     st.session_state["response"] = None
-#     st.session_state["feedbackRating"] = None
-#     st.session_state["feedbackText"] = None
-#     #st.session_state["engine"] = None
-#     st.session_state["references"] = []
+def reboot():
+    st.session_state["search"] = False
+    st.session_state["query"] = None
+    st.session_state["response"] = None
+    st.session_state["feedbackRating"] = None
+    st.session_state["feedbackText"] = None
+    #st.session_state["engine"] = None
+    st.session_state["references"] = []
 
 def generatedQuestionCallback(newQuery):
     st.session_state["query"] = newQuery
@@ -190,61 +190,61 @@ def createNewQuestions(query,response):
 
 
 searchObj1 = SearchBackend1()
-userInput = st.text_input("Typer your query and Press Enter!")
-st.session_state.query = userInput
+# userInput = st.text_input("Typer your query and Press Enter!")
+# st.session_state.query = userInput
 userEmail = st.experimental_user.email
 
-if userInput:
-    # tab1,tab2 = st.tabs(["Home","More Info!"])
-    # with tab1:
-    response,citations,pubmedPapers = searchObj1.main(st.session_state.query)
-    st.session_state.response = str(response)
-    st.session_state.references = citations
+# if userInput:
+#     # tab1,tab2 = st.tabs(["Home","More Info!"])
+#     # with tab1:
+#     response,citations,pubmedPapers = searchObj1.main(st.session_state.query)
+#     st.session_state.response = str(response)
+#     st.session_state.references = citations
 
-    #st.write(f'<p style="font-size:30px"><b>Response</b></p>',unsafe_allow_html=True)
-        #st.markdown(f"*:{st.session_state.response}:*")
+#     #st.write(f'<p style="font-size:30px"><b>Response</b></p>',unsafe_allow_html=True)
+#         #st.markdown(f"*:{st.session_state.response}:*")
     
-    st.markdown("")
-    st.subheader("Response")
-    if st.session_state.response != "None":
-        st.write(f'<i>{st.session_state.response}</i>',unsafe_allow_html=True)
-    else:
-        st.write(f'<i>Sorry! Try a different question</i>',unsafe_allow_html=True)
+#     st.markdown("")
+#     st.subheader("Response")
+#     if st.session_state.response != "None":
+#         st.write(f'<i>{st.session_state.response}</i>',unsafe_allow_html=True)
+#     else:
+#         st.write(f'<i>Sorry! Try a different question</i>',unsafe_allow_html=True)
     
-    st.markdown("")
-    if st.session_state.response != "None":
-        st.subheader("Deep Dive")
-        newQuestions = createNewQuestions(st.session_state.query,st.session_state.response) 
-        col1,col2,col3 = st.columns([0.3,0.3,0.4])
-        col1.button(newQuestions[0],on_click=generatedQuestionCallback,args=[newQuestions[0]])
-        col2.button(newQuestions[1],on_click=generatedQuestionCallback,args=[newQuestions[1]])
-        col3.button(newQuestions[2],on_click=generatedQuestionCallback,args=[newQuestions[2]])
+#     st.markdown("")
+#     if st.session_state.response != "None":
+#         st.subheader("Deep Dive")
+#         newQuestions = createNewQuestions(st.session_state.query,st.session_state.response) 
+#         col1,col2,col3 = st.columns([0.3,0.3,0.4])
+#         col1.button(newQuestions[0],on_click=generatedQuestionCallback,args=[newQuestions[0]])
+#         col2.button(newQuestions[1],on_click=generatedQuestionCallback,args=[newQuestions[1]])
+#         col3.button(newQuestions[2],on_click=generatedQuestionCallback,args=[newQuestions[2]])
 
-    st.markdown("")
-    otherPaperCheck = []
-    st.subheader("Citations")
-    for i,reference in enumerate(st.session_state.references):
-        citationsCol1,citationsCol2 = st.columns([0.9,0.1])
-        otherPaperCheck.append(reference[2])
-        with citationsCol1:
-            st.write(f'<a href = {reference[2]}>{reference[1]}</a>',unsafe_allow_html=True)
-            showText = st.checkbox("Show Details",key=f"citations{i}")
-            if showText:
-                st.caption(f'<i>{reference[0]}</i>',unsafe_allow_html=True)
-                st.caption(f'Confidence Score: {round(reference[3],2)}')
-            st.markdown("")
-        with citationsCol2:
-            #citationsCollector = create_feedback_collector("citations-feedback")
-            collectorCitations.st_feedback(
-                feedback_type="thumbs",
-                model="model-001",
-                metadata={"query":st.session_state.query,"response":st.session_state.response,"url":reference[2]},
-                user_id=userEmail,
-                success_fail_message=False,
-                key=f"Citations-Feedback:{i}",
-            )
-                    # citationPositive = st.button(":thumbsup:",key=f"citationsPositive{i}")
-                    # citationPositive = st.button(":thumbsdown:",key=f"citationsNegative{i}")    
+#     st.markdown("")
+#     otherPaperCheck = []
+#     st.subheader("Citations")
+#     for i,reference in enumerate(st.session_state.references):
+#         citationsCol1,citationsCol2 = st.columns([0.9,0.1])
+#         otherPaperCheck.append(reference[2])
+#         with citationsCol1:
+#             st.write(f'<a href = {reference[2]}>{reference[1]}</a>',unsafe_allow_html=True)
+#             showText = st.checkbox("Show Details",key=f"citations{i}")
+#             if showText:
+#                 st.caption(f'<i>{reference[0]}</i>',unsafe_allow_html=True)
+#                 st.caption(f'Confidence Score: {round(reference[3],2)}')
+#             st.markdown("")
+#         with citationsCol2:
+#             #citationsCollector = create_feedback_collector("citations-feedback")
+#             collectorCitations.st_feedback(
+#                 feedback_type="thumbs",
+#                 model="model-001",
+#                 metadata={"query":st.session_state.query,"response":st.session_state.response,"url":reference[2]},
+#                 user_id=userEmail,
+#                 success_fail_message=False,
+#                 key=f"Citations-Feedback:{i}",
+#             )
+#                     # citationPositive = st.button(":thumbsup:",key=f"citationsPositive{i}")
+#                     # citationPositive = st.button(":thumbsdown:",key=f"citationsNegative{i}")    
 
         # st.markdown("")
     # st.divider()
@@ -262,18 +262,18 @@ if userInput:
     #     #open_feedback_label="Please help us understand your response better"
     # )
 
-    st.markdown("")
-    # feedbackCol1, feedbackCol2, feedbackCol3 = st.columns([1,1,1])
-    # with feedbackCol2:
-    collectorMain.st_feedback(
-        feedback_type="faces",
-        model="model-001",
-        metadata={"query":st.session_state.query,"response":st.session_state.response},
-        success_fail_message=False,
-        user_id=userEmail,
-        align="flex-start",
-        open_feedback_label="Please help us understand your response better"
-    )
+    # st.markdown("")
+    # # feedbackCol1, feedbackCol2, feedbackCol3 = st.columns([1,1,1])
+    # # with feedbackCol2:
+    # collectorMain.st_feedback(
+    #     feedback_type="faces",
+    #     model="model-001",
+    #     metadata={"query":st.session_state.query,"response":st.session_state.response},
+    #     success_fail_message=False,
+    #     user_id=userEmail,
+    #     align="flex-start",
+    #     open_feedback_label="Please help us understand your response better"
+    # )
     
     #st.write(st.session_state)
     
@@ -383,131 +383,131 @@ if userInput:
 
 
 
-# if st.session_state["search"] == False:
-#     # engine = st.selectbox('Select Engine',["Engine1","Engine2","Engine3"])   
-#     # st.session_state["engine"] = engine
-#     if st.session_state.query == None:
-#         userInput = st.text_input("Search with papers")
-#     else:
-#         userInput = st.text_input("Search with papers",value=st.session_state.query)
-#     st.session_state.query = userInput
-#     buttonClick = st.button("Search",on_click=searchButtonCallback)
+if st.session_state["search"] == False:
+    # engine = st.selectbox('Select Engine',["Engine1","Engine2","Engine3"])   
+    # st.session_state["engine"] = engine
+    if st.session_state.query == None:
+        userInput = st.text_input("Search with papers")
+    else:
+        userInput = st.text_input("Search with papers",value=st.session_state.query)
+    st.session_state.query = userInput
+    buttonClick = st.button("Search",on_click=searchButtonCallback)
 
 
-# if st.session_state.search:
+if st.session_state.search:
 
-#     response,citations,pubmedPapers = searchObj1.main(st.session_state.query)
-#     st.session_state.response = str(response)
-#     st.session_state.references = citations
+    response,citations,pubmedPapers = searchObj1.main(st.session_state.query)
+    st.session_state.response = str(response)
+    st.session_state.references = citations
 
 
-#     tab1,tab2 = st.tabs(["Home","More Info!"])
+    tab1,tab2 = st.tabs(["Home","More Info!"])
     
-#     with tab1:
-#         queryCol1,queryCol2 = st.columns([0.8,0.2])
-#         with queryCol1:
-#             #st.subheader("Query")
-#             st.write(f'<p style="font-size:30px"><b>Query</b></p>',unsafe_allow_html=True)
-#             #st.markdown(st.session_state.query)
-#             st.write(f'{st.session_state.query}',
-# unsafe_allow_html=True)
-#         with queryCol2:
-#             st.button("Edit Query",on_click = editcallback)
+    with tab1:
+        queryCol1,queryCol2 = st.columns([0.8,0.2])
+        with queryCol1:
+            #st.subheader("Query")
+            st.write(f'<p style="font-size:30px"><b>Query</b></p>',unsafe_allow_html=True)
+            #st.markdown(st.session_state.query)
+            st.write(f'{st.session_state.query}',
+unsafe_allow_html=True)
+        with queryCol2:
+            st.button("Edit Query",on_click = editcallback)
         
-#         st.write(f'<p style="font-size:30px"><b>Response</b></p>',unsafe_allow_html=True)
-#         #st.markdown(f"*:{st.session_state.response}:*")
-#         if st.session_state.response != "None":
-#             st.write(f'<i>{st.session_state.response}</i>',unsafe_allow_html=True)
-#         else:
-#             st.write(f'<i>Sorry! Try a different question</i>',unsafe_allow_html=True)
-#         st.markdown("")
-#         st.markdown("")
+        st.write(f'<p style="font-size:30px"><b>Response</b></p>',unsafe_allow_html=True)
+        #st.markdown(f"*:{st.session_state.response}:*")
+        if st.session_state.response != "None":
+            st.write(f'<i>{st.session_state.response}</i>',unsafe_allow_html=True)
+        else:
+            st.write(f'<i>Sorry! Try a different question</i>',unsafe_allow_html=True)
+        st.markdown("")
+        st.markdown("")
 
-#         if st.session_state.response != "None":
-#             newQuestions = createNewQuestions(st.session_state.query,st.session_state.response) 
-#             col1,col2,col3 = st.columns([0.3,0.3,0.4])
-#             col1.button(newQuestions[0],on_click=generatedQuestionCallback,args=[newQuestions[0]])
-#             col2.button(newQuestions[1],on_click=generatedQuestionCallback,args=[newQuestions[1]])
-#             col3.button(newQuestions[2],on_click=generatedQuestionCallback,args=[newQuestions[2]])
+        if st.session_state.response != "None":
+            newQuestions = createNewQuestions(st.session_state.query,st.session_state.response) 
+            col1,col2,col3 = st.columns([0.3,0.3,0.4])
+            col1.button(newQuestions[0],on_click=generatedQuestionCallback,args=[newQuestions[0]])
+            col2.button(newQuestions[1],on_click=generatedQuestionCallback,args=[newQuestions[1]])
+            col3.button(newQuestions[2],on_click=generatedQuestionCallback,args=[newQuestions[2]])
 
-#         otherPaperCheck = []
-#         with st.expander("Citations"):
-#             for i,reference in enumerate(citations):
-#                 citationsCol1,citationsCol2 = st.columns([0.9,0.1])
-#                 otherPaperCheck.append(reference[2])
-#                 with citationsCol1:
-#                     st.write(f'<a href = {reference[2]}>{reference[1]}</a>',unsafe_allow_html=True)
-#                     st.caption(f'Confidence Score: {round(reference[3],2)}')
-#                     showText = st.checkbox("Show Text",key=f"citations{i}")
-#                     if showText:
-#                         st.caption(f'<i>{reference[0]}</i>',unsafe_allow_html=True)
-#                     st.markdown("")
-#                 with citationsCol2:
-#                     collectorCitations.st_feedback(
-#                         feedback_type="thumbs",
-#                         model="model-001",
-#                         metadata={"query":st.session_state.query,"response":st.session_state.response,"url":reference[2]},
-#                         success_fail_message=False,
-#                         key=f"Citations-Feedback:{i}",
-#                         user_id=st.session_state.userId
-#                     )
-#                     # citationPositive = st.button(":thumbsup:",key=f"citationsPositive{i}")
-#                     # citationPositive = st.button(":thumbsdown:",key=f"citationsNegative{i}")    
+        otherPaperCheck = []
+        with st.expander("Citations"):
+            for i,reference in enumerate(citations):
+                citationsCol1,citationsCol2 = st.columns([0.9,0.1])
+                otherPaperCheck.append(reference[2])
+                with citationsCol1:
+                    st.write(f'<a href = {reference[2]}>{reference[1]}</a>',unsafe_allow_html=True)
+                    st.caption(f'Confidence Score: {round(reference[3],2)}')
+                    showText = st.checkbox("Show Text",key=f"citations{i}")
+                    if showText:
+                        st.caption(f'<i>{reference[0]}</i>',unsafe_allow_html=True)
+                    st.markdown("")
+                with citationsCol2:
+                    collectorCitations.st_feedback(
+                        feedback_type="thumbs",
+                        model="model-001",
+                        metadata={"query":st.session_state.query,"response":st.session_state.response,"url":reference[2]},
+                        success_fail_message=False,
+                        key=f"Citations-Feedback:{i}",
+                        user_id=userEmail
+                    )
+                    # citationPositive = st.button(":thumbsup:",key=f"citationsPositive{i}")
+                    # citationPositive = st.button(":thumbsdown:",key=f"citationsNegative{i}")    
 
-#         st.markdown("")
-#         #st.divider()
-#         #st.subheader("Feedback")
-#         collectorMain.st_feedback(
-#             feedback_type="faces",
-#             model="model-001",
-#             metadata={"query":st.session_state.query,"response":st.session_state.response},
-#             success_fail_message=False,
-#             user_id=st.session_state.userId,
-#             align="flex-start",
-#             open_feedback_label="Please help us understand your response better"
-#         )
+        st.markdown("")
+        #st.divider()
+        #st.subheader("Feedback")
+        collectorMain.st_feedback(
+            feedback_type="faces",
+            model="model-001",
+            metadata={"query":st.session_state.query,"response":st.session_state.response},
+            success_fail_message=False,
+            user_id=userEmail,
+            align="flex-start",
+            open_feedback_label="Please help us understand your response better"
+        )
 
-#         st.divider()
-#         feedbackCol1, feedbackCol2, feedbackCol3 = st.columns([1,1,1])
-#         with feedbackCol2:
-#             searchAgain = st.button("Search Again!", on_click=reboot,type="primary")
+        st.divider()
+        feedbackCol1, feedbackCol2, feedbackCol3 = st.columns([1,1,1])
+        with feedbackCol2:
+            searchAgain = st.button("Search Again!", on_click=reboot,type="primary")
 
-#         # responseFeedback = st.radio('Choose for the generated response',options=('Correct Response, No Hallucinations','Hallucinations','Didnt Like the Response','No Response'))
-#         # st.session_state["feedbackRating"] = responseFeedback
-#         # if responseFeedback:
-#         #     feedbackText = st.text_area("Please help us understand your feedback better")
-#         #     st.session_state["feedbackText"] = feedbackText
-#         # st.markdown("")
-#         # st.markdown("") 
-#         # finalCol1, finalCol2, finalCol3 = st.columns([1,1,1])
-#         # finalCol2.button("Search Again!", on_click=reboot,type="primary")
+        # responseFeedback = st.radio('Choose for the generated response',options=('Correct Response, No Hallucinations','Hallucinations','Didnt Like the Response','No Response'))
+        # st.session_state["feedbackRating"] = responseFeedback
+        # if responseFeedback:
+        #     feedbackText = st.text_area("Please help us understand your feedback better")
+        #     st.session_state["feedbackText"] = feedbackText
+        # st.markdown("")
+        # st.markdown("") 
+        # finalCol1, finalCol2, finalCol3 = st.columns([1,1,1])
+        # finalCol2.button("Search Again!", on_click=reboot,type="primary")
 
     
-#     with tab2:
-#         with st.expander("Other relevant papers"):
-#             for i,data in enumerate(pubmedPapers):
-#                 url = data["url"]
-#                 url = str(url)
-#                 relevantCol1,relevantCol2 = st.columns([0.9,0.1])
-#                 if url not in otherPaperCheck:
-#                     with relevantCol1:
-#                         st.write(f'<a href = {url}>{data["title"]}</a>',unsafe_allow_html=True)
-#                         showText = st.checkbox("Show Text",key=f"moreInfo{i}")
-#                         if showText:
-#                             st.caption(f'<i>{data["abstract"]}</i>',unsafe_allow_html=True)
-#                         # st.caption(data["title"])
-#                         # st.caption(url)
-#                     with relevantCol2:
-#                         collectorCitations.st_feedback(
-#                             feedback_type="thumbs",
-#                             model="model-001",
-#                             metadata={"query":st.session_state.query,"response":st.session_state.response,"url":url},
-#                             success_fail_message=False,
-#                             key=f"Pubmed-Feedback:{i}",
-#                             user_id=st.session_state.userId
-#                         )
-#                         #st.button(":thumbsup:",key=f"positive{i}")
-#                         #st.button(":thumbsdown:",key=f"negative{i}")
+    with tab2:
+        with st.expander("Other relevant papers"):
+            for i,data in enumerate(pubmedPapers):
+                url = data["url"]
+                url = str(url)
+                relevantCol1,relevantCol2 = st.columns([0.9,0.1])
+                if url not in otherPaperCheck:
+                    with relevantCol1:
+                        st.write(f'<a href = {url}>{data["title"]}</a>',unsafe_allow_html=True)
+                        showText = st.checkbox("Show Text",key=f"moreInfo{i}")
+                        if showText:
+                            st.caption(f'<i>{data["abstract"]}</i>',unsafe_allow_html=True)
+                        # st.caption(data["title"])
+                        # st.caption(url)
+                    with relevantCol2:
+                        collectorCitations.st_feedback(
+                            feedback_type="thumbs",
+                            model="model-001",
+                            metadata={"query":st.session_state.query,"response":st.session_state.response,"url":url},
+                            success_fail_message=False,
+                            key=f"Pubmed-Feedback:{i}",
+                            user_id=st.session_state.userId
+                        )
+                        #st.button(":thumbsup:",key=f"positive{i}")
+                        #st.button(":thumbsdown:",key=f"negative{i}")
                         
 
 
