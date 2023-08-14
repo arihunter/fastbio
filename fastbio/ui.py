@@ -251,28 +251,28 @@ if userInput:
         #st.subheader("Feedback")
     mainCollector = create_feedback_collector("default")
     
+    # st.markdown("")
+    # mainCollector.st_feedback(
+    #     label="Please provide feedback",
+    #     feedback_type="textbox",
+    #     model="model-001",
+    #     metadata={"query":st.session_state.query,"response":st.session_state.response},
+    #     success_fail_message=False,
+    #     user_id=userEmail,
+    #     #open_feedback_label="Please help us understand your response better"
+    # )
+
     st.markdown("")
+    # feedbackCol1, feedbackCol2, feedbackCol3 = st.columns([1,1,1])
+    # with feedbackCol2:
     mainCollector.st_feedback(
-        label="Please provide feedback",
-        feedback_type="textbox",
+        feedback_type="faces",
         model="model-001",
         metadata={"query":st.session_state.query,"response":st.session_state.response},
         success_fail_message=False,
         user_id=userEmail,
-        #open_feedback_label="Please help us understand your response better"
+        open_feedback_label="Please help us understand your response better"
     )
-
-    st.markdown("")
-    feedbackCol1, feedbackCol2, feedbackCol3 = st.columns([1,1,1])
-    with feedbackCol2:
-        mainCollector.st_feedback(
-            feedback_type="faces",
-            model="model-001",
-            metadata={"query":st.session_state.query,"response":st.session_state.response},
-            success_fail_message=False,
-            user_id=userEmail,
-            #open_feedback_label="Please help us understand your response better"
-        )
     
     
 
