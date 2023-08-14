@@ -27,7 +27,7 @@ if "references" not in st.session_state:
     st.session_state["references"] = []
 if "userID" not in st.session_state:
     st.session_state["userId"] = userId
-if "pubmedPapers" not in st.session_state["pubmedPapers"]:
+if "pubmedPapers" not in st.session_state:
     st.session_state.pubmedPapers = []
 
 # config = trubrics.init(
@@ -117,30 +117,31 @@ class SearchBackend1():
     
     return response,citations,pubmedPapers
 
-def searchButtonCallback():
+def searchButtonCallback(userInput):
     st.session_state.search = True
+    st.session_state.query = userInput
     response,citations,pubmedPapers = searchObj1.main(st.session_state.query)
     st.session_state.response = str(response)
     st.session_state.references = citations
     st.session_state.pubmedPapers = pubmedPapers
 
 
-def editcallback():
-    st.session_state["search"] = False
-    st.session_state["response"] = None
-    st.session_state["feedbackRating"] = None
-    st.session_state["feedbackText"] = None
-    #st.session_state["engine"] = None
-    st.session_state["references"] = []
+# def editcallback():
+#     st.session_state["search"] = False
+#     st.session_state["response"] = None
+#     st.session_state["feedbackRating"] = None
+#     st.session_state["feedbackText"] = None
+#     #st.session_state["engine"] = None
+#     st.session_state["references"] = []
 
-def reboot():
-    st.session_state["search"] = False
-    st.session_state["query"] = None
-    st.session_state["response"] = None
-    st.session_state["feedbackRating"] = None
-    st.session_state["feedbackText"] = None
-    #st.session_state["engine"] = None
-    st.session_state["references"] = []
+# def reboot():
+#     st.session_state["search"] = False
+#     st.session_state["query"] = None
+#     st.session_state["response"] = None
+#     st.session_state["feedbackRating"] = None
+#     st.session_state["feedbackText"] = None
+#     #st.session_state["engine"] = None
+#     st.session_state["references"] = []
 
 def generatedQuestionCallback(newQuery):
     st.session_state["query"] = newQuery
