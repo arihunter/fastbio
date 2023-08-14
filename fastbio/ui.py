@@ -119,21 +119,6 @@ def searchButtonCallback():
     st.session_state.search = True
 
 
-if st.session_state["search"] == False:
-    # engine = st.selectbox('Select Engine',["Engine1","Engine2","Engine3"])   
-    # st.session_state["engine"] = engine
-    if st.session_state.query == None:
-        userInput = st.text_input("Search with papers")
-    else:
-        userInput = st.text_input("Search with papers",value=st.session_state.query)
-    st.session_state.query = userInput
-    buttonClick = st.button("Search",on_click=searchButtonCallback)
-
-def log():
-    pass
-
-
-
 def editcallback():
     st.session_state["search"] = False
     st.session_state["response"] = None
@@ -152,7 +137,6 @@ def reboot():
     st.session_state["references"] = []
 
 def generatedQuestionCallback(newQuery):
-    log()
     st.session_state["query"] = newQuery
     st.session_state["response"] = None
     st.session_state["feedbackRating"] = None
@@ -189,6 +173,17 @@ def createNewQuestions(query,response):
     
 
 searchObj1 = SearchBackend1()
+
+if st.session_state["search"] == False:
+    # engine = st.selectbox('Select Engine',["Engine1","Engine2","Engine3"])   
+    # st.session_state["engine"] = engine
+    if st.session_state.query == None:
+        userInput = st.text_input("Search with papers")
+    else:
+        userInput = st.text_input("Search with papers",value=st.session_state.query)
+    st.session_state.query = userInput
+    buttonClick = st.button("Search",on_click=searchButtonCallback)
+
 
 if st.session_state.search:
 
