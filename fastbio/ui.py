@@ -120,6 +120,7 @@ class SearchBackend1():
 def searchButtonCallback(userInput):
     st.session_state.search = True
     #st.session_state.toggle1 = not st.session_state.toggle2 
+    print(userInput)
     response,citations,pubmedPapers = searchObj1.main(userInput)
     st.session_state.query = userInput
     st.session_state.response = str(response)
