@@ -130,28 +130,28 @@ def searchButtonCallback():
     # st.session_state.pubmedPapers = pubmedPapers
 
 
-def editcallback():
-    st.session_state["search"] = False
-    st.session_state["response"] = None
-    st.session_state["feedbackRating"] = None
-    st.session_state["feedbackText"] = None
-    #st.session_state["engine"] = None
-    st.session_state["references"] = []
+# def editcallback():
+#     st.session_state["search"] = False
+#     st.session_state["response"] = None
+#     st.session_state["feedbackRating"] = None
+#     st.session_state["feedbackText"] = None
+#     #st.session_state["engine"] = None
+#     st.session_state["references"] = []
 
-def reboot():
-    st.session_state["search"] = False
-    st.session_state["query"] = None
-    st.session_state["response"] = None
-    st.session_state["feedbackRating"] = None
-    st.session_state["feedbackText"] = None
-    #st.session_state["engine"] = None
-    st.session_state["references"] = []
+# def reboot():
+#     st.session_state["search"] = False
+#     st.session_state["query"] = None
+#     st.session_state["response"] = None
+#     st.session_state["feedbackRating"] = None
+#     st.session_state["feedbackText"] = None
+#     #st.session_state["engine"] = None
+#     st.session_state["references"] = []
 
 def generatedQuestionCallback(newQuery):
     st.session_state["query"] = newQuery
     st.session_state["response"] = None
-    st.session_state["feedbackRating"] = None
-    st.session_state["feedbackText"] = None
+    #st.session_state["feedbackRating"] = None
+    #st.session_state["feedbackText"] = None
     st.session_state["references"] = []
     st.session_state["search"] = True
 
@@ -239,7 +239,7 @@ if userInput:
         # st.markdown("")
     # st.divider()
         #st.subheader("Feedback")
-    st.markdown("   ")
+    st.markdown("")
     collectorMain.st_feedback(
         feedback_type="textbox",
         model="model-001",
@@ -248,6 +248,7 @@ if userInput:
         user_id=userEmail,
         #open_feedback_label="Please help us understand your response better"
     )
+
     st.markdown("")
     feedbackCol1, feedbackCol2, feedbackCol3 = st.columns([1,1,1])
     with feedbackCol2:
