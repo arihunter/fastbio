@@ -253,6 +253,7 @@ if userInput:
     
     st.markdown("")
     mainCollector.st_feedback(
+        label="Please provide feedback",
         feedback_type="textbox",
         model="model-001",
         metadata={"query":st.session_state.query,"response":st.session_state.response},
