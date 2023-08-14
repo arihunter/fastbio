@@ -192,6 +192,8 @@ if userInput:
 
     #st.write(f'<p style="font-size:30px"><b>Response</b></p>',unsafe_allow_html=True)
         #st.markdown(f"*:{st.session_state.response}:*")
+    
+    st.divider()
     if st.session_state.response != "None":
         st.write(f'<i>{st.session_state.response}</i>',unsafe_allow_html=True)
     else:
