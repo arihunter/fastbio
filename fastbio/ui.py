@@ -222,27 +222,27 @@ if userInput:
 
     st.markdown("")
     otherPaperCheck = []
-    with st.expander("Citations"):
-        for i,reference in enumerate(st.session_state.references):
-            citationsCol1,citationsCol2 = st.columns([0.9,0.1])
-            otherPaperCheck.append(reference[2])
-            with citationsCol1:
-                st.write(f'<a href = {reference[2]}>{reference[1]}</a>',unsafe_allow_html=True)
-                st.caption(f'Confidence Score: {round(reference[3],2)}')
-                showText = st.checkbox("Show Text",key=f"citations{i}")
-                if showText:
-                    st.caption(f'<i>{reference[0]}</i>',unsafe_allow_html=True)
-                st.markdown("")
-            with citationsCol2:
-                citationsCollector = create_feedback_collector("citations-feedback")
-                citationsCollector.st_feedback(
-                    feedback_type="thumbs",
-                    model="model-001",
-                    metadata={"query":st.session_state.query,"response":st.session_state.response,"url":reference[2]},
-                    success_fail_message=False,
-                    key=f"Citations-Feedback:{i}",
-                    user_id=userEmail,
-                )
+    st.subheader("Citations")
+    for i,reference in enumerate(st.session_state.references):
+        citationsCol1,citationsCol2 = st.columns([0.9,0.1])
+        otherPaperCheck.append(reference[2])
+        with citationsCol1:
+            st.write(f'<a href = {reference[2]}>{reference[1]}</a>',unsafe_allow_html=True)
+            st.caption(f'Confidence Score: {round(reference[3],2)}')
+            showText = st.checkbox("Show Text",key=f"citations{i}")
+            if showText:
+                st.caption(f'<i>{reference[0]}</i>',unsafe_allow_html=True)
+            st.markdown("")
+        with citationsCol2:
+            citationsCollector = create_feedback_collector("citations-feedback")
+            citationsCollector.st_feedback(
+                feedback_type="thumbs",
+                model="model-001",
+                metadata={"query":st.session_state.query,"response":st.session_state.response,"url":reference[2]},
+                success_fail_message=False,
+                key=f"Citations-Feedback:{i}",
+                user_id=userEmail,
+            )
                     # citationPositive = st.button(":thumbsup:",key=f"citationsPositive{i}")
                     # citationPositive = st.button(":thumbsdown:",key=f"citationsNegative{i}")    
 
