@@ -71,7 +71,7 @@ openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 #add logic to create a userId
 #link userId to VectorStoreIndices
-#@st.cache_resource(show_spinner=False)
+@st.cache_resource(show_spinner=False)
 class SearchBackend1():
   def __init__(self):
     #   self.indexCreated = False
