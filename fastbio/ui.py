@@ -191,7 +191,7 @@ with tab1:
         else:
             userInput = st.text_input("Search with papers",value=st.session_state.query)
 
-        isSearch = st.form_submit_button("Search",on_click=searchButtonCallback,args=[userInput])
+        isSearch = st.form_submit_button("Search",on_click=searchButtonCallback,args=[userInput],type="primary")
 
     
     if st.session_state.search:
@@ -215,24 +215,25 @@ with tab1:
         otherPaperCheck = []
         with st.expander("Citations"):
             for i,reference in enumerate(st.session_state.references):
-                citationsCol1,citationsCol2 = st.columns([0.9,0.1])
                 otherPaperCheck.append(reference[2])
-                with citationsCol1:
-                    st.write(f'<a href = {reference[2]}>{reference[1]}</a>',unsafe_allow_html=True)
-                    st.caption(f'Confidence Score: {round(reference[3],2)}')
-                    showText = st.checkbox("Show Text",key=f"citations{i}")
-                    if showText:
-                        st.caption(f'<i>{reference[0]}</i>',unsafe_allow_html=True)
-                    st.markdown("")
-                with citationsCol2:
-                    collectorCitations.st_feedback(
-                        feedback_type="thumbs",
-                        model="model-001",
-                        metadata={"query":st.session_state.query,"response":st.session_state.response,"url":reference[2]},
-                        success_fail_message=False,
-                        key=f"Citations-Feedback:{i}",
-                        user_id=st.session_state.userId
-                    )
+                st.write(f'<a href = {reference[2]}>{reference[1]}</a>',unsafe_allow_html=True)
+                st.caption(f'Confidence Score: {round(reference[3],2)}')
+                showText = st.checkbox("Show Text",key=f"citations{i}")
+                if showText:
+                    st.caption(f'<i>{reference[0]}</i>',unsafe_allow_html=True)
+                st.markdown("")
+                collectorCitations.st_feedback(
+                    feedback_type="thumbs",
+                    model="model-001",
+                    metadata={"query":st.session_state.query,"response":st.session_state.response,"url":reference[2]},
+                    success_fail_message=False,
+                    key=f"Citations-Feedback:{i}",
+                    user_id=st.session_state.userId
+                )
+                # with citationsCol1:
+                    
+                # with citationsCol2:
+                    
                     # citationPositive = st.button(":thumbsup:",key=f"citationsPositive{i}")
                     # citationPositive = st.button(":thumbsdown:",key=f"citationsNegative{i}")    
 
@@ -260,22 +261,22 @@ with tab2:
             url = str(url)
             relevantCol1,relevantCol2 = st.columns([0.9,0.1])
             if url not in otherPaperCheck:
-                with relevantCol1:
-                    st.write(f'<a href = {url}>{data["title"]}</a>',unsafe_allow_html=True)
-                    showText = st.checkbox("Show Text",key=f"moreInfo{i}")
-                    if showText:
-                        st.caption(f'<i>{data["abstract"]}</i>',unsafe_allow_html=True)
+                # with relevantCol1:
+                st.write(f'<a href = {url}>{data["title"]}</a>',unsafe_allow_html=True)
+                showText = st.checkbox("Show Text",key=f"moreInfo{i}")
+                if showText:
+                    st.caption(f'<i>{data["abstract"]}</i>',unsafe_allow_html=True)
                     # st.caption(data["title"])
                     # st.caption(url)
-                with relevantCol2:
-                    collectorCitations.st_feedback(
-                        feedback_type="thumbs",
-                        model="model-001",
-                        metadata={"query":st.session_state.query,"response":st.session_state.response,"url":url},
-                        success_fail_message=False,
-                        key=f"Pubmed-Feedback:{i}",
-                        user_id=st.session_state.userId
-                    )
+                #with relevantCol2:
+                collectorCitations.st_feedback(
+                    feedback_type="thumbs",
+                    model="model-001",
+                    metadata={"query":st.session_state.query,"response":st.session_state.response,"url":url},
+                    success_fail_message=False,
+                    key=f"Pubmed-Feedback:{i}",
+                    user_id=st.session_state.userId
+                )
 
 
 
