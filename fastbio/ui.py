@@ -192,7 +192,8 @@ with tab1:
             userInput = st.text_input("Search with papers")
         else:
             userInput = st.text_input("Search with papers",value=st.session_state.query)
-        isSearch = st.form_submit_button("Search",on_click=searchButtonCallback,args=[userInput],type="primary")
+        st.session_state.query = userInput
+        isSearch = st.form_submit_button("Search",on_click=searchButtonCallback,args=[st.session_state.query],type="primary")
 
     
         if isSearch:
