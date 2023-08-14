@@ -35,12 +35,11 @@ if "pubmedPapers" not in st.session_state:
 #     password=st.secrets["TRUBRICS_PASSWORD"]
 # )
 
-@st.cache_resource(show_spinner=False)
-collectorMain = FeedbackCollector(
-    component_name="default",
-    email=st.secrets["TRUBRICS_EMAIL"], # Store your Trubrics credentials in st.secrets:
-    password=st.secrets["TRUBRICS_PASSWORD"], # https://blog.streamlit.io/secrets-in-sharing-apps/
-)
+#streamlit code
+
+st.set_page_config(page_title="fastbio")
+col1,col2,col3 = st.columns([1,1,1])
+col2.title("FastBio")
 
 @st.cache_resource(show_spinner=False)
 collectorCitations = FeedbackCollector(
@@ -49,12 +48,12 @@ collectorCitations = FeedbackCollector(
     password=st.secrets["TRUBRICS_PASSWORD"], # https://blog.streamlit.io/secrets-in-sharing-apps/
 )
 
-
-#streamlit code
-
-st.set_page_config(page_title="fastbio")
-col1,col2,col3 = st.columns([1,1,1])
-col2.title("FastBio")
+@st.cache_resource(show_spinner=False)
+collectorMain = FeedbackCollector(
+    component_name="default",
+    email=st.secrets["TRUBRICS_EMAIL"], # Store your Trubrics credentials in st.secrets:
+    password=st.secrets["TRUBRICS_PASSWORD"], # https://blog.streamlit.io/secrets-in-sharing-apps/
+)
 
 
 #sidebar
