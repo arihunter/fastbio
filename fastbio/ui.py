@@ -467,7 +467,7 @@ unsafe_allow_html=True)
             open_feedback_label="Please help us understand your response better"
         )
 
-        st.divider()
+        #st.divider()
         feedbackCol1, feedbackCol2, feedbackCol3 = st.columns([1,1,1])
         with feedbackCol2:
             searchAgain = st.button("Search Again!", on_click=reboot,type="primary")
