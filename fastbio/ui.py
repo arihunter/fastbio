@@ -248,7 +248,7 @@ if userInput:
         user_id=userEmail,
         #open_feedback_label="Please help us understand your response better"
     )
-    st,markdown("")
+    st.markdown("")
     feedbackCol1, feedbackCol2, feedbackCol3 = st.columns([1,1,1])
     with feedbackCol2:
         collectorMain.st_feedback(
