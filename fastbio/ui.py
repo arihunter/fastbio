@@ -205,13 +205,12 @@ if userInput:
         #st.markdown(f"*:{st.session_state.response}:*")
     
     st.markdown("")
-    with st.container():
-        st.subheader("Response")
-        if st.session_state.response != "None":
-            st.write(f'<i>{st.session_state.response}</i>',unsafe_allow_html=True)
-        else:
-            st.write(f'<i>Sorry! Try a different question</i>',unsafe_allow_html=True)
-        
+    st.subheader("Response")
+    if st.session_state.response != "None":
+        st.write(f'<i>{st.session_state.response}</i>',unsafe_allow_html=True)
+    else:
+        st.write(f'<i>Sorry! Try a different question</i>',unsafe_allow_html=True)
+    
     st.markdown("")
     if st.session_state.response != "None":
         st.subheader("Deep Dive")
