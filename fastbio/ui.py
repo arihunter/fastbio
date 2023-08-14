@@ -193,7 +193,7 @@ if userInput:
     #st.write(f'<p style="font-size:30px"><b>Response</b></p>',unsafe_allow_html=True)
         #st.markdown(f"*:{st.session_state.response}:*")
     
-    st.divider()
+    st.markdown("")
     if st.session_state.response != "None":
         st.write(f'<i>{st.session_state.response}</i>',unsafe_allow_html=True)
     else:
@@ -205,9 +205,9 @@ if userInput:
     if st.session_state.response != "None":
         newQuestions = createNewQuestions(st.session_state.query,st.session_state.response) 
         col1,col2,col3 = st.columns([0.3,0.3,0.4])
-        col1.button(newQuestions[0],on_click=generatedQuestionCallback,args=[newQuestions[0]])
+        col1.button(newQuestions[2],on_click=generatedQuestionCallback,args=[newQuestions[0]])
         col2.button(newQuestions[1],on_click=generatedQuestionCallback,args=[newQuestions[1]])
-        col3.button(newQuestions[2],on_click=generatedQuestionCallback,args=[newQuestions[2]])
+        col3.button(newQuestions[0],on_click=generatedQuestionCallback,args=[newQuestions[2]])
 
     otherPaperCheck = []
     with st.expander("Citations"):
