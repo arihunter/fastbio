@@ -205,6 +205,7 @@ if userInput:
     st.markdown("")
 
     if st.session_state.response != "None":
+        st.subheader("Deep Dive")
         newQuestions = createNewQuestions(st.session_state.query,st.session_state.response) 
         col1,col2,col3 = st.columns([0.3,0.3,0.4])
         col1.button(newQuestions[0],on_click=generatedQuestionCallback,args=[newQuestions[0]])
