@@ -194,7 +194,7 @@ with tab1:
         isSearch = st.form_submit_button("Search",on_click=searchButtonCallback,args=[userInput],type="primary")
 
     
-        if st.session_state.search:
+        if isSearch:
             st.write(f'<p style="font-size:30px"><b>Response</b></p>',unsafe_allow_html=True)
             #st.markdown(f"*:{st.session_state.response}:*")
             if st.session_state.response != "None":
