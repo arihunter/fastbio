@@ -40,6 +40,7 @@ if "pubmedPapers" not in st.session_state:
 st.set_page_config(page_title="fastbio")
 col1,col2,col3 = st.columns([1,1,1])
 col2.title("FastBio")
+st.divider()
 
 
 collectorCitations = FeedbackCollector(
