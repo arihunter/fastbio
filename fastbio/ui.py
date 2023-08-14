@@ -356,7 +356,7 @@ unsafe_allow_html=True)
                     # citationPositive = st.button(":thumbsup:",key=f"citationsPositive{i}")
                     # citationPositive = st.button(":thumbsdown:",key=f"citationsNegative{i}")    
 
-        # st.markdown("")
+        st.markdown("")
         #st.divider()
         #st.subheader("Feedback")
         collectorMain.st_feedback(
