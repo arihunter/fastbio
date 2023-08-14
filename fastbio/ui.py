@@ -8,7 +8,7 @@ import openai
 import uuid
 from trubrics.integrations.streamlit import FeedbackCollector
 
-userId = str(uuid.uuid4())
+# userId = str(uuid.uuid4())
 
 #initialisation
 if "search" not in st.session_state:
@@ -25,10 +25,10 @@ if "apikey" not in st.session_state:
     st.session_state["apikey"] = None
 if "references" not in st.session_state:
     st.session_state["references"] = []
-if "userID" not in st.session_state:
-    st.session_state["userId"] = userId
-if "pubmedPapers" not in st.session_state:
-    st.session_state.pubmedPapers = []
+# if "userID" not in st.session_state:
+#     st.session_state["userId"] = userId
+# if "pubmedPapers" not in st.session_state:
+#     st.session_state.pubmedPapers = []
 
 # config = trubrics.init(
 #     email=st.secrets["TRUBRICS_EMAIL"],  # read your Trubrics secrets from environment variables
@@ -183,6 +183,7 @@ def createNewQuestions(query,response):
 searchObj1 = SearchBackend1()
 userInput = st.text_input("Typer your query and Press Enter!")
 st.session_state.query = userInput
+userEmail = st.experimental_user.email
 
 if userInput:
     # tab1,tab2 = st.tabs(["Home","More Info!"])
@@ -230,7 +231,7 @@ if userInput:
                     metadata={"query":st.session_state.query,"response":st.session_state.response,"url":reference[2]},
                     success_fail_message=False,
                     key=f"Citations-Feedback:{i}",
-                    user_id=st.session_state.userId
+                    user_id=userEmail
                 )
                     # citationPositive = st.button(":thumbsup:",key=f"citationsPositive{i}")
                     # citationPositive = st.button(":thumbsdown:",key=f"citationsNegative{i}")    
@@ -245,7 +246,7 @@ if userInput:
             model="model-001",
             metadata={"query":st.session_state.query,"response":st.session_state.response},
             success_fail_message=False,
-            user_id=st.session_state.userId,
+            user_id=userEmail,
             open_feedback_label="Please help us understand your response better"
         )
 
