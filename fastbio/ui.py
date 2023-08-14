@@ -17,12 +17,12 @@ if "query" not in st.session_state:
     st.session_state["query"] = None
 if "response" not in st.session_state:
     st.session_state["response"] = None
-if "feedbackRating" not in st.session_state:
-    st.session_state["feedbackRating"] = None
-if "feedbackText" not in st.session_state:
-    st.session_state["feedbackText"] = None
-if "apikey" not in st.session_state:
-    st.session_state["apikey"] = None
+# if "feedbackRating" not in st.session_state:
+#     st.session_state["feedbackRating"] = None
+# if "feedbackText" not in st.session_state:
+#     st.session_state["feedbackText"] = None
+# if "apikey" not in st.session_state:
+#     st.session_state["apikey"] = None
 if "references" not in st.session_state:
     st.session_state["references"] = []
 # if "userID" not in st.session_state:
@@ -275,7 +275,7 @@ if userInput:
         open_feedback_label="Please help us understand your response better"
     )
     
-    st.write(st.session_state)
+    #st.write(st.session_state)
     
 
 
