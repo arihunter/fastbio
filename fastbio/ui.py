@@ -202,8 +202,6 @@ if userInput:
         st.write(f'<i>Sorry! Try a different question</i>',unsafe_allow_html=True)
     
     st.markdown("")
-    st.markdown("")
-
     if st.session_state.response != "None":
         st.subheader("Deep Dive")
         newQuestions = createNewQuestions(st.session_state.query,st.session_state.response) 
