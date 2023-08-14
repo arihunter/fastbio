@@ -43,27 +43,27 @@ col2.title("FastBio")
 st.divider()
 
 
-# collectorCitations = FeedbackCollector(
-#     component_name="citations-feedback",
-#     email=st.secrets["TRUBRICS_EMAIL"], # Store your Trubrics credentials in st.secrets:
-#     password=st.secrets["TRUBRICS_PASSWORD"], # https://blog.streamlit.io/secrets-in-sharing-apps/
-# )
+collectorCitations = FeedbackCollector(
+    component_name="citations-feedback",
+    email=st.secrets["TRUBRICS_EMAIL"], # Store your Trubrics credentials in st.secrets:
+    password=st.secrets["TRUBRICS_PASSWORD"], # https://blog.streamlit.io/secrets-in-sharing-apps/
+)
 
 
-# collectorMain = FeedbackCollector(
-#     component_name="default",
-#     email=st.secrets["TRUBRICS_EMAIL"], # Store your Trubrics credentials in st.secrets:
-#     password=st.secrets["TRUBRICS_PASSWORD"], # https://blog.streamlit.io/secrets-in-sharing-apps/
-# )
+collectorMain = FeedbackCollector(
+    component_name="default",
+    email=st.secrets["TRUBRICS_EMAIL"], # Store your Trubrics credentials in st.secrets:
+    password=st.secrets["TRUBRICS_PASSWORD"], # https://blog.streamlit.io/secrets-in-sharing-apps/
+)
 
 #@st.cache_resource(show_spinner=False)
-def create_feedback_collector(name):
-    collector = FeedbackCollector(
-        component_name=name,
-        email=st.secrets["TRUBRICS_EMAIL"],
-        password=st.secrets["TRUBRICS_PASSWORD"],
-    )
-    return collector
+# def create_feedback_collector(name):
+#     collector = FeedbackCollector(
+#         component_name=name,
+#         email=st.secrets["TRUBRICS_EMAIL"],
+#         password=st.secrets["TRUBRICS_PASSWORD"],
+#     )
+#     return collector
 
 #sidebar
 # apiKey = st.sidebar.text_input("OpenAI API Key", type="password")
@@ -234,8 +234,8 @@ if userInput:
                 st.caption(f'Confidence Score: {round(reference[3],2)}')
             st.markdown("")
         with citationsCol2:
-            citationsCollector = create_feedback_collector("citations-feedback")
-            citationsCollector.st_feedback(
+            #citationsCollector = create_feedback_collector("citations-feedback")
+            collectorCitations.st_feedback(
                 feedback_type="thumbs",
                 model="model-001",
                 metadata={"query":st.session_state.query,"response":st.session_state.response,"url":reference[2]},
@@ -249,7 +249,7 @@ if userInput:
         # st.markdown("")
     # st.divider()
         #st.subheader("Feedback")
-    mainCollector = create_feedback_collector("default")
+    #mainCollector = create_feedback_collector("default")
     
     # st.markdown("")
     # mainCollector.st_feedback(
@@ -265,7 +265,7 @@ if userInput:
     st.markdown("")
     # feedbackCol1, feedbackCol2, feedbackCol3 = st.columns([1,1,1])
     # with feedbackCol2:
-    mainCollector.st_feedback(
+    colllectorMain.st_feedback(
         feedback_type="faces",
         model="model-001",
         metadata={"query":st.session_state.query,"response":st.session_state.response},
