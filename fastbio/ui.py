@@ -271,6 +271,7 @@ if userInput:
         metadata={"query":st.session_state.query,"response":st.session_state.response},
         success_fail_message=False,
         user_id=userEmail,
+        align="flex-start",
         open_feedback_label="Please help us understand your response better"
     )
     
