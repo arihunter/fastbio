@@ -100,7 +100,7 @@ class SearchBackend1():
   @st.cache_data(show_spinner=False)
   def main(_self,query):
     with st.spinner("Searching PubMed"):
-        currentDocs,pubmedPapers = _self.fetch_docs(query)
+        currentDocs,pubmedPapersapers = _self.fetch_docs(query)
         
         _self.index = VectorStoreIndex.from_documents(currentDocs)
         _self.queryEngine = _self.index.as_query_engine()
@@ -231,7 +231,7 @@ if userInput:
                     metadata={"query":st.session_state.query,"response":st.session_state.response,"url":reference[2]},
                     success_fail_message=False,
                     key=f"Citations-Feedback:{i}",
-                    user_id=userEmail
+                    user_id=userEmail,
                 )
                     # citationPositive = st.button(":thumbsup:",key=f"citationsPositive{i}")
                     # citationPositive = st.button(":thumbsdown:",key=f"citationsNegative{i}")    
