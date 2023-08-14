@@ -210,6 +210,7 @@ if userInput:
         col2.button(newQuestions[1],on_click=generatedQuestionCallback,args=[newQuestions[1]])
         col3.button(newQuestions[0],on_click=generatedQuestionCallback,args=[newQuestions[2]])
 
+    st.markdown("")
     otherPaperCheck = []
     with st.expander("Citations"):
         for i,reference in enumerate(st.session_state.references):
