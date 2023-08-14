@@ -247,8 +247,18 @@ if userInput:
             metadata={"query":st.session_state.query,"response":st.session_state.response},
             success_fail_message=False,
             user_id=userEmail,
-            open_feedback_label="Please help us understand your response better"
+            #open_feedback_label="Please help us understand your response better"
         )
+        collectorMain.st_feedback(
+            feedback_type="textbox",
+            model="model-001",
+            metadata={"query":st.session_state.query,"response":st.session_state.response},
+            success_fail_message=False,
+            user_id=userEmail,
+            #open_feedback_label="Please help us understand your response better"
+        )
+
+
 
 
 
