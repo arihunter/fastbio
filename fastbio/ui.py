@@ -56,7 +56,7 @@ st.divider()
 #     password=st.secrets["TRUBRICS_PASSWORD"], # https://blog.streamlit.io/secrets-in-sharing-apps/
 # )
 
-@st.cache_resource(show_spinner=False)
+#@st.cache_resource(show_spinner=False)
 def create_feedback_collector(name):
     collector = FeedbackCollector(
         component_name=name,
