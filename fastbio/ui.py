@@ -119,6 +119,7 @@ class SearchBackend1():
 
 def searchButtonCallback(userInput):
     st.session_state.search = True
+    st.session_state.toggle1 = not st.session_state.toggle2 
     st.session_state.query = userInput
     response,citations,pubmedPapers = searchObj1.main(st.session_state.query)
     st.session_state.response = str(response)
@@ -185,17 +186,16 @@ tab1,tab2 = st.tabs(["Home","More Info!"])
 
 
 with tab1:
+    
     with st.form("Search_Form"):
         if st.session_state.query == None:
             userInput = st.text_input("Search with papers")
         else:
             userInput = st.text_input("Search with papers",value=st.session_state.query)
-
         isSearch = st.form_submit_button("Search",on_click=searchButtonCallback,args=[userInput],type="primary")
 
     
     if st.session_state.search:
-
         st.write(f'<p style="font-size:30px"><b>Response</b></p>',unsafe_allow_html=True)
         #st.markdown(f"*:{st.session_state.response}:*")
         if st.session_state.response != "None":
