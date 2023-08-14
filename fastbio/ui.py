@@ -275,6 +275,7 @@ if userInput:
         open_feedback_label="Please help us understand your response better"
     )
     
+    st.write(st.session_state)
     
 
 
