@@ -228,10 +228,10 @@ if userInput:
         otherPaperCheck.append(reference[2])
         with citationsCol1:
             st.write(f'<a href = {reference[2]}>{reference[1]}</a>',unsafe_allow_html=True)
-            st.caption(f'Confidence Score: {round(reference[3],2)}')
-            showText = st.checkbox("Show Text",key=f"citations{i}")
+            showText = st.checkbox("Show Details",key=f"citations{i}")
             if showText:
                 st.caption(f'<i>{reference[0]}</i>',unsafe_allow_html=True)
+                st.caption(f'Confidence Score: {round(reference[3],2)}')
             st.markdown("")
         with citationsCol2:
             citationsCollector = create_feedback_collector("citations-feedback")
