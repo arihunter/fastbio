@@ -179,19 +179,13 @@ def createNewQuestions(query,response):
     return newQuestions
 
 
-
-    
-
 searchObj1 = SearchBackend1()
+userInput = st.text_input("Typer your query and Press Enter!")
+st.session_state.query = userInput
 
-tab1,tab2 = st.tabs(["Home","More Info!"])
-
-
-with tab1:
-    userInput = st.text_input("Typer your query and Press Enter!")
-
-    if userInput:
-        st.session_state.query = userInput
+if userInput:
+    tab1,tab2 = st.tabs(["Home","More Info!"])
+    with tab1:
         response,citations,pubmedPapers = searchObj1.main(st.session_state.query)
         st.session_state.response = str(response)
         st.session_state.references = citations
@@ -253,29 +247,29 @@ with tab1:
 
 
 
-with tab2:
-    with st.expander("Other relevant papers"):
-        for i,data in enumerate(st.session_state.pubmedPapers):
-            url = data["url"]
-            url = str(url)
-            relevantCol1,relevantCol2 = st.columns([0.9,0.1])
-            if url not in otherPaperCheck:
-                with relevantCol1:
-                    st.write(f'<a href = {url}>{data["title"]}</a>',unsafe_allow_html=True)
-                    showText = st.checkbox("Show Text",key=f"moreInfo{i}")
-                    if showText:
-                        st.caption(f'<i>{data["abstract"]}</i>',unsafe_allow_html=True)
-                    # st.caption(data["title"])
-                    # st.caption(url)
-                with relevantCol2:
-                    collectorCitations.st_feedback(
-                        feedback_type="thumbs",
-                        model="model-001",
-                        metadata={"query":st.session_state.query,"response":st.session_state.response,"url":url},
-                        success_fail_message=False,
-                        key=f"Pubmed-Feedback:{i}",
-                        user_id=st.session_state.userId
-                    )
+    with tab2:
+        with st.expander("Other relevant papers"):
+            for i,data in enumerate(st.session_state.pubmedPapers):
+                url = data["url"]
+                url = str(url)
+                relevantCol1,relevantCol2 = st.columns([0.9,0.1])
+                if url not in otherPaperCheck:
+                    with relevantCol1:
+                        st.write(f'<a href = {url}>{data["title"]}</a>',unsafe_allow_html=True)
+                        showText = st.checkbox("Show Text",key=f"moreInfo{i}")
+                        if showText:
+                            st.caption(f'<i>{data["abstract"]}</i>',unsafe_allow_html=True)
+                        # st.caption(data["title"])
+                        # st.caption(url)
+                    with relevantCol2:
+                        collectorCitations.st_feedback(
+                            feedback_type="thumbs",
+                            model="model-001",
+                            metadata={"query":st.session_state.query,"response":st.session_state.response,"url":url},
+                            success_fail_message=False,
+                            key=f"Pubmed-Feedback:{i}",
+                            user_id=st.session_state.userId
+                        )
 
 
 
