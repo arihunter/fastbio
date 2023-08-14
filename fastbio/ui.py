@@ -188,7 +188,7 @@ tab1,tab2 = st.tabs(["Home","More Info!"])
 
 
 with tab1:
-    userInput = st.text_input("")
+    userInput = st.text_input("Typer your query and Press Enter!")
 
     if userInput:
         st.session_state.query = userInput
