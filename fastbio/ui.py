@@ -232,18 +232,18 @@ if userInput:
                     # citationPositive = st.button(":thumbsdown:",key=f"citationsNegative{i}")    
 
         # st.markdown("")
-        st.divider()
-            #st.subheader("Feedback")
-        feedbackCol1, feedbackCol2, feedbackCol3 = st.columns([1,1,1])
-        with feedbackCol2:
-            collectorMain.st_feedback(
-                feedback_type="faces",
-                model="model-001",
-                metadata={"query":st.session_state.query,"response":st.session_state.response},
-                success_fail_message=False,
-                user_id=st.session_state.userId,
-                open_feedback_label="Please help us understand your response better"
-            )
+    st.divider()
+        #st.subheader("Feedback")
+    feedbackCol1, feedbackCol2, feedbackCol3 = st.columns([1,1,1])
+    with feedbackCol2:
+        collectorMain.st_feedback(
+            feedback_type="faces",
+            model="model-001",
+            metadata={"query":st.session_state.query,"response":st.session_state.response},
+            success_fail_message=False,
+            user_id=st.session_state.userId,
+            open_feedback_label="Please help us understand your response better"
+        )
 
 
 
