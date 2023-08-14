@@ -249,7 +249,7 @@ if userInput:
 
     with tab2:
         with st.expander("Other relevant papers"):
-            for i,data in enumerate(st.session_state.pubmedPapers):
+            for i,data in enumerate(pubmedPapers):
                 url = data["url"]
                 url = str(url)
                 relevantCol1,relevantCol2 = st.columns([0.9,0.1])
