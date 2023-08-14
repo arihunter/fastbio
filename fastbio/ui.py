@@ -239,9 +239,9 @@ if userInput:
                 feedback_type="thumbs",
                 model="model-001",
                 metadata={"query":st.session_state.query,"response":st.session_state.response,"url":reference[2]},
+                user_id=userEmail,
                 success_fail_message=False,
                 key=f"Citations-Feedback:{i}",
-                user_id=userEmail,
             )
                     # citationPositive = st.button(":thumbsup:",key=f"citationsPositive{i}")
                     # citationPositive = st.button(":thumbsdown:",key=f"citationsNegative{i}")    
