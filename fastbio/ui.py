@@ -50,7 +50,7 @@ collectorCitations = FeedbackCollector(
 )
 
 
-collectorMain = FeedbackCollector(
+collectorMain=FeedbackCollector(
     component_name="default",
     email=st.secrets["TRUBRICS_EMAIL"], # Store your Trubrics credentials in st.secrets:
     password=st.secrets["TRUBRICS_PASSWORD"], # https://blog.streamlit.io/secrets-in-sharing-apps/
@@ -265,7 +265,7 @@ if userInput:
     st.markdown("")
     # feedbackCol1, feedbackCol2, feedbackCol3 = st.columns([1,1,1])
     # with feedbackCol2:
-    colllectorMain.st_feedback(
+    collectorMain.st_feedback(
         feedback_type="faces",
         model="model-001",
         metadata={"query":st.session_state.query,"response":st.session_state.response},
