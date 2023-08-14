@@ -56,6 +56,14 @@ collectorMain = FeedbackCollector(
     password=st.secrets["TRUBRICS_PASSWORD"], # https://blog.streamlit.io/secrets-in-sharing-apps/
 )
 
+@st.cache_resource(show_spinner=False)
+def create_feedback_collector(name):
+    collector = FeedbackCollector(
+        component_name=name,
+        email=st.secrets["TRUBRICS_EMAIL"],
+        password=st.secrets["TRUBRICS_PASSWORD"],
+    )
+    return collector
 
 #sidebar
 # apiKey = st.sidebar.text_input("OpenAI API Key", type="password")
@@ -225,7 +233,8 @@ if userInput:
                     st.caption(f'<i>{reference[0]}</i>',unsafe_allow_html=True)
                 st.markdown("")
             with citationsCol2:
-                collectorCitations.st_feedback(
+                citationsCollector = create_feedback_collector("citations-feedback")
+                citationsCollector.st_feedback(
                     feedback_type="thumbs",
                     model="model-001",
                     metadata={"query":st.session_state.query,"response":st.session_state.response,"url":reference[2]},
@@ -239,8 +248,10 @@ if userInput:
         # st.markdown("")
     # st.divider()
         #st.subheader("Feedback")
+    mainCollector = create_feedback_collector("default")
+    
     st.markdown("")
-    collectorMain.st_feedback(
+    mainCollector.st_feedback(
         feedback_type="textbox",
         model="model-001",
         metadata={"query":st.session_state.query,"response":st.session_state.response},
@@ -252,7 +263,7 @@ if userInput:
     st.markdown("")
     feedbackCol1, feedbackCol2, feedbackCol3 = st.columns([1,1,1])
     with feedbackCol2:
-        collectorMain.st_feedback(
+        mainCollector.st_feedback(
             feedback_type="faces",
             model="model-001",
             metadata={"query":st.session_state.query,"response":st.session_state.response},
