@@ -504,7 +504,7 @@ unsafe_allow_html=True)
                             metadata={"query":st.session_state.query,"response":st.session_state.response,"url":url},
                             success_fail_message=False,
                             key=f"Pubmed-Feedback:{i}",
-                            user_id=st.session_state.userId
+                            user_id=userEmail
                         )
                         #st.button(":thumbsup:",key=f"positive{i}")
                         #st.button(":thumbsdown:",key=f"negative{i}")
