@@ -367,6 +367,7 @@ unsafe_allow_html=True)
                 metadata={"query":st.session_state.query,"response":st.session_state.response},
                 success_fail_message=False,
                 user_id=st.session_state.userId,
+                align="center",
                 open_feedback_label="Please help us understand your response better"
             )
             searchAgain = st.button("Search Again!", on_click=reboot,type="primary")
