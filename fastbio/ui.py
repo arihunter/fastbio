@@ -100,7 +100,7 @@ class SearchBackend1():
   @st.cache_data(show_spinner=False)
   def main(_self,query):
     with st.spinner("Searching PubMed"):
-        currentDocs,pubmedPapersapers = _self.fetch_docs(query)
+        currentDocs,pubmedPapers = _self.fetch_docs(query)
         
         _self.index = VectorStoreIndex.from_documents(currentDocs)
         _self.queryEngine = _self.index.as_query_engine()
