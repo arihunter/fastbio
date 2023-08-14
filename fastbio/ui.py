@@ -188,9 +188,8 @@ tab1,tab2 = st.tabs(["Home","More Info!"])
 
 
 with tab1:
-    userInput = st.text_input("Search with papers")
-    
-    
+    userInput = st.text_input("")
+
     if userInput:
         st.session_state.query = userInput
         response,citations,pubmedPapers = searchObj1.main(st.session_state.query)
