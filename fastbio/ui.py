@@ -195,6 +195,7 @@ if userInput:
         #st.markdown(f"*:{st.session_state.response}:*")
     
     st.markdown("")
+    st.subheader("Response")
     if st.session_state.response != "None":
         st.write(f'<i>{st.session_state.response}</i>',unsafe_allow_html=True)
     else:
